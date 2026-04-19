@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Admin - All Applications{% endblock %}
+
+{% block content %}
+<div class="pt-24 pb-20 px-4 md:px-6 min-h-screen"
+     style="background: #020617;">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+      <div>
+        <span class="section-tag text-xs font-semibold px-4 py-1.5 rounded-full inline-block uppercase tracking-widest mb-3">Admin</span>
+        <h1 class="text-3xl font-black tracking-tight">All Loan <span class="gradient-text">Applications</span></h1>
+        <p class="text-gray-500 text-sm mt-1">{{ apps | length }} total records</p>
+      </div>
+      <a href="/dashboard" class="btn-glow bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl transition text-sm self-start">
+        📊 View Dashboard
+      </a>
+    </div>
+
+    <div class="card-glass rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Email</th>
+              <th>Amount</th>
+              <th>Income</th>
+              <th>Credit</th>
+              <th>Area</th>
+              <th>Decision</th>
+              <th>Confidence</th>
+              <th>Credit Score</th>
+              <th>Date</th>
+              <th>PDF</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for app in apps %}
+            <tr>
+              <td class="text-gray-500">#{{ app.id }}</td>
+              <td class="text-gray-400">{{ app.user.username if app.user else '—' }}</td>
+              <td class="text-gray-400 truncate max-w-xs">{{ app.email }}</td>
+              <td class="font-semibold">₹{{ app.loan_amount | int }}k</td>
+              <td>₹{{ (app.applicant_income + app.coapplicant_income) | int }}</td>
+              <td>{{ 'Good' if app.credit == 1 else 'None' }}</td>
+              <td class="text-gray-400">{{ app.area }}</td>
+              <td>
+                {% if app.prediction == 'approved' %}
+                <span class="px-2.5 py-1 rounded-lg bg-green-500/20 text-green-400 font-semibold text-xs">✅ Approved</span>
+                {% else %}
+                <span class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-semibold text-xs">❌ Rejected</span>
+                {% endif %}
+              </td>
+              <td class="font-bold {% if app.confidence and app.confidence >= 75 %}text-green-400{% else %}text-yellow-400{% endif %}">
+                {{ app.confidence ~ '%' if app.confidence else '—' }}
+              </td>
+              <td class="font-bold {% if app.credit_score and app.credit_score >= 700 %}text-green-400{% elif app.credit_score and app.credit_score >= 500 %}text-yellow-400{% else %}text-red-400{% endif %}">
+                {{ app.credit_score if app.credit_score else '—' }}
+              </td>
+              <td class="text-gray-500 text-xs">{{ app.timestamp.strftime('%d %b %Y') if app.timestamp else '—' }}</td>
+              <td>
+                <a href="/download_report/{{ app.id }}" target="_blank"
+                   class="text-emerald-400 hover:text-emerald-300 text-xs font-semibold">📄</a>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="12" class="text-center py-12 text-gray-500">No applications yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <a href="/" class="text-emerald-400 hover:text-emerald-300 text-sm">← Back to Home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

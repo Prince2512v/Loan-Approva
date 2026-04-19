@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Model Comparison{% endblock %}
+
+{% block content %}
+<div class="pt-24 pb-20 px-4 md:px-6 min-h-screen"
+     style="background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.07) 0%, transparent 60%), #020617;">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-10">
+      <span class="section-tag text-xs font-semibold px-4 py-1.5 rounded-full inline-block uppercase tracking-widest mb-4">
+        ML Research
+      </span>
+      <h1 class="text-4xl font-black tracking-tight">Model <span class="gradient-text">Comparison</span></h1>
+      <p class="text-gray-500 text-sm mt-2">Logistic Regression · Random Forest · Decision Tree</p>
+    </div>
+
+    {% if results %}
+    <!-- Best model badge -->
+    <div class="card-glass rounded-2xl p-5 mb-6 flex items-center gap-4">
+      <div class="w-12 h-12 bg-emerald-600/20 border border-emerald-500/30 rounded-xl flex items-center justify-center text-2xl">🏆</div>
+      <div>
+        <p class="text-xs text-gray-400 uppercase tracking-widest">Best Performing Model</p>
+        <p class="text-xl font-black text-white">{{ best }} <span class="text-emerald-400">✓</span></p>
+      </div>
+    </div>
+
+    <!-- Accuracy cards -->
+    <div class="grid md:grid-cols-3 gap-4 mb-8">
+      {% for r in results %}
+      <div class="card-glass rounded-2xl p-6 text-center {% if r.model == best %}border-emerald-500/40{% endif %}">
+        <p class="text-xs text-gray-400 uppercase tracking-widest mb-3">{{ r.model }}</p>
+        <p class="text-4xl font-black {% if r.model == best %}gradient-text{% else %}text-white{% endif %}">{{ r.accuracy }}%</p>
+        <p class="text-xs text-gray-500 mt-2">Test Accuracy</p>
+        {% if r.model == best %}
+        <span class="mt-3 inline-block text-xs bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full">Best ✓</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Plotly bar chart -->
+    <div class="card-glass rounded-2xl p-6">
+      <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-widest">📊 Accuracy Comparison Chart</h3>
+      <div id="model-chart"></div>
+    </div>
+
+    {% else %}
+    <div class="card-glass rounded-2xl p-16 text-center">
+      <div class="text-6xl mb-4">🤖</div>
+      <h2 class="text-2xl font-bold mb-2">Comparison Unavailable</h2>
+      <p class="text-gray-500 text-sm">Make sure <code class="text-emerald-400">train.csv</code> is present in the project root.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if results %}
+<script>
+Plotly.newPlot('model-chart',
+  JSON.parse('{{ chart | safe }}').data,
+  JSON.parse('{{ chart | safe }}').layout,
+  { responsive: true, displayModeBar: false }
+);
+</script>
+{% endif %}
+{% endblock %}

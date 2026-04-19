@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Retrain Model{% endblock %}
+
+{% block content %}
+<div class="pt-24 pb-20 px-4 md:px-6 min-h-screen"
+     style="background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.07) 0%, transparent 60%), #020617;">
+  <div class="max-w-xl mx-auto">
+
+    <div class="text-center mb-10">
+      <span class="section-tag text-xs font-semibold px-4 py-1.5 rounded-full inline-block uppercase tracking-widest mb-4">
+        Advanced
+      </span>
+      <h1 class="text-4xl font-black tracking-tight">Model <span class="gradient-text">Retraining</span></h1>
+      <p class="text-gray-500 text-sm mt-2">Upload a CSV dataset to retrain and replace the active prediction model.</p>
+    </div>
+
+    <div class="card-glass rounded-2xl p-8">
+      <!-- Info box -->
+      <div class="bg-emerald-900/30 border border-emerald-500/30 rounded-xl p-4 mb-7 text-sm text-emerald-200">
+        <p class="font-semibold mb-1">📋 Expected CSV columns:</p>
+        <p class="text-xs text-emerald-300/70">Gender, Married, Dependents, Education, Self_Employed, ApplicantIncome, CoapplicantIncome, LoanAmount, Loan_Amount_Term, Credit_History, Property_Area, Loan_Status</p>
+      </div>
+
+      <form action="/retrain" method="POST" enctype="multipart/form-data">
+        <div class="mb-6">
+          <label class="block text-xs font-semibold text-gray-400 mb-3 uppercase tracking-wide">Upload CSV Dataset</label>
+          <div class="border-2 border-dashed border-emerald-500/30 hover:border-emerald-500/60 rounded-xl p-8 text-center transition cursor-pointer"
+               onclick="document.getElementById('csvFile').click()">
+            <div class="text-4xl mb-2">📁</div>
+            <p class="text-gray-400 text-sm">Click to browse or drag & drop</p>
+            <p class="text-gray-600 text-xs mt-1">Only .csv files accepted</p>
+            <p class="text-emerald-400 text-xs mt-2 font-semibold" id="file-name">No file selected</p>
+          </div>
+          <input type="file" id="csvFile" name="file" accept=".csv" class="hidden"
+                 onchange="document.getElementById('file-name').textContent = this.files[0]?.name || 'No file selected'">
+        </div>
+        <button type="submit"
+                class="btn-glow w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition text-sm">
+          🔄 Retrain Model
+        </button>
+      </form>
+
+      <div class="mt-6 pt-6 border-t border-white/10">
+        <p class="text-xs text-gray-500 text-center">
+          ⚠️ Retraining will replace the current production model. Use with care.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

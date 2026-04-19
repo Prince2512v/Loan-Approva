@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- ═══ HERO ═══ -->
+<section class="hero-bg min-h-screen flex items-center pt-16">
+  <div class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center w-full">
+    <div>
+      <span class="section-tag text-xs font-semibold px-4 py-1.5 rounded-full mb-6 inline-block uppercase tracking-widest">
+        AI-Powered Platform
+      </span>
+      <h1 class="text-5xl md:text-6xl font-black leading-[1.1] mb-6 tracking-tight">
+        Smart Loan <br/>
+        <span class="gradient-text">Decisions</span><br/>
+        in Seconds
+      </h1>
+      <p class="text-gray-400 text-lg mb-10 leading-relaxed max-w-md">
+        Machine learning evaluates your loan eligibility instantly with data-driven precision,
+        confidence scores, and explainable AI reasoning.
+      </p>
+      <div class="flex flex-wrap gap-4 mb-14">
+        {% if current_user.is_authenticated %}
+          <a href="/predict" class="btn-glow bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 px-8 rounded-full transition text-sm">
+            Start Prediction →
+          </a>
+          <a href="/dashboard" class="border border-white/10 hover:border-emerald-500 text-gray-300 hover:text-white font-medium py-3.5 px-8 rounded-full transition text-sm">
+            View Dashboard
+          </a>
+        {% else %}
+          <a href="/register" class="btn-glow bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 px-8 rounded-full transition text-sm">
+            Get Started Free →
+          </a>
+          <a href="/login" class="border border-white/10 hover:border-emerald-500 text-gray-300 hover:text-white font-medium py-3.5 px-8 rounded-full transition text-sm">
+            Sign In
+          </a>
+        {% endif %}
+      </div>
+
+      <!-- Stat cards -->
+      <div class="flex gap-4 flex-wrap">
+        <div class="stat-card">
+          <p class="text-3xl font-black gradient-text">82%</p>
+          <p class="text-gray-500 text-xs mt-1">Model Accuracy</p>
+        </div>
+        <div class="stat-card">
+          <p class="text-3xl font-black gradient-text">2s</p>
+          <p class="text-gray-500 text-xs mt-1">Avg. Response</p>
+        </div>
+        <div class="stat-card">
+          <p class="text-3xl font-black gradient-text">11</p>
+          <p class="text-gray-500 text-xs mt-1">AI Features</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden md:flex flex-col gap-5">
+      <!-- Live feed card -->
+      <div class="card-glass rounded-2xl p-6 transition duration-300">
+        <div class="flex items-center gap-2 mb-5">
+          <span class="pulse-ring rounded-full bg-green-500 inline-block"></span>
+          <p class="text-sm font-semibold text-green-400 ml-2">Live Approvals</p>
+        </div>
+        <div class="activity-fade">
+          <p id="activity-text" class="text-gray-200 text-sm leading-relaxed mb-2">Rahul from Mumbai got approved for ₹2,50,000 loan.</p>
+          <p id="activity-time" class="text-xs text-gray-500">2 minutes ago</p>
+        </div>
+        <div class="mt-5 flex gap-1.5">
+          <div class="h-1 rounded-full bg-emerald-500 flex-1 opacity-90"></div>
+          <div class="h-1 rounded-full bg-cyan-500 w-1/3 opacity-60"></div>
+          <div class="h-1 rounded-full bg-blue-500 w-1/4 opacity-40"></div>
+        </div>
+      </div>
+
+      <!-- Model performance card -->
+      <div class="card-glass rounded-2xl p-6 transition duration-300"
+           style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.05));border:1px solid rgba(16,185,129,0.2);">
+        <p class="text-xs text-emerald-400 font-semibold uppercase tracking-widest mb-3">Model Performance</p>
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Random Forest</span><span class="text-emerald-300 font-bold">Best ✓</span></div>
+            <div class="h-2 bg-white/5 rounded-full"><div class="h-2 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500" style="width:82%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Decision Tree</span><span></span></div>
+            <div class="h-2 bg-white/5 rounded-full"><div class="h-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500" style="width:76%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Logistic Regression</span><span></span></div>
+            <div class="h-2 bg-white/5 rounded-full"><div class="h-2 rounded-full bg-gradient-to-r from-emerald-600 to-cyan-600" style="width:68%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section id="how" class="py-24 bg-[#030a21]">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <span class="section-tag text-xs font-semibold px-4 py-1.5 rounded-full mb-5 inline-block uppercase tracking-widest">Process</span>
+    <h2 class="text-4xl font-black mb-16 tracking-tight">How It <span class="gradient-text">Works</span></h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="relative">
+        <div class="w-14 h-14 feature-icon rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5">📋</div>
+        <h3 class="font-bold text-lg mb-2">Fill Your Details</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Enter your financial and personal information in the 3-step wizard.</p>
+      </div>
+      <div class="relative">
+        <div class="w-14 h-14 feature-icon rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5">🤖</div>
+        <h3 class="font-bold text-lg mb-2">AI Analysis</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Our Random Forest model analyses 14 risk factors and produces a confidence score.</p>
+      </div>
+      <div>
+        <div class="w-14 h-14 feature-icon rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5">✅</div>
+        <h3 class="font-bold text-lg mb-2">Explained Result</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Get approval decision with reasoning, credit score, and a downloadable PDF report.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="py-24 bg-[#020617]">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <span class="section-tag text-xs font-semibold px-4 py-1.5 rounded-full mb-5 inline-block uppercase tracking-widest">Features</span>
+      <h2 class="text-4xl font-black tracking-tight">Why <span class="gradient-text">LoanDecide?</span></h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card-glass rounded-2xl p-8 transition duration-300 group">
+        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">⚡</div>
+        <h3 class="text-lg font-bold mb-3">Instant Results + Confidence</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Get predictions in seconds with a model confidence percentage via <code class="text-emerald-400 text-xs">predict_proba()</code>.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-8 transition duration-300 group" style="border-color:rgba(16,185,129,0.2);">
+        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🧠</div>
+        <h3 class="text-lg font-bold mb-3">Explainable AI</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Understand exactly why your loan was approved or rejected with factor-by-factor reasoning.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-8 transition duration-300 group">
+        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">📊</div>
+        <h3 class="text-lg font-bold mb-3">Analytics Dashboard</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Interactive Plotly charts — approval rates, income vs loan scatter, area breakdown.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-8 transition duration-300 group">
+        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🔒</div>
+        <h3 class="text-lg font-bold mb-3">Secure Authentication</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Register, log in, and view your personal prediction history — protected with Flask-Login.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-8 transition duration-300 group" style="border-color:rgba(16,185,129,0.2);">
+        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">💳</div>
+        <h3 class="text-lg font-bold mb-3">Credit Score</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Get an auto-generated credit score (0–900) based on your income, loan amount, and credit history.</p>
+      </div>
+      <div class="card-glass rounded-2xl p-8 transition duration-300 group">
+        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">📄</div>
+        <h3 class="text-lg font-bold mb-3">PDF Reports</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Download a professional PDF report for any prediction from your history.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="py-20 relative overflow-hidden"
+         style="background:linear-gradient(135deg,#020617,#052e16,#020617);">
+  <div class="absolute inset-0 opacity-20"
+       style="background:radial-gradient(ellipse at 50% 0%,rgba(16,185,129,0.6),transparent 70%);"></div>
+  <div class="relative max-w-3xl mx-auto px-6 text-center">
+    <h2 class="text-4xl md:text-5xl font-black mb-5 tracking-tight leading-tight">
+      Ready to Check Your<br/><span class="gradient-text">Loan Eligibility?</span>
+    </h2>
+    <p class="text-gray-400 mb-10 text-lg">Fast. Accurate. Free. AI-powered.</p>
+    {% if current_user.is_authenticated %}
+      <a href="/predict" class="btn-glow bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-10 rounded-full transition text-base inline-block">
+        Predict Now →
+      </a>
+    {% else %}
+      <a href="/register" class="btn-glow bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-10 rounded-full transition text-base inline-block">
+        Create Free Account →
+      </a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+<script>
+const activities = [
+  { text: "Rahul from Mumbai got approved for ₹2,50,000 loan.", time: "2 minutes ago" },
+  { text: "Priya secured ₹5,00,000 home loan.", time: "2 hours ago" },
+  { text: "Amit qualified for a personal loan.", time: "3 hours ago" },
+  { text: "Sneha improved her credit score and got approved.", time: "9 minutes ago" },
+  { text: "Karan received instant approval for his new home.", time: "few hours ago" }
+];
+let idx = 0;
+const textEl = document.getElementById("activity-text");
+const timeEl = document.getElementById("activity-time");
+if (textEl) {
+  function updateFeed(text, time) {
+    textEl.style.opacity = 0; timeEl.style.opacity = 0;
+    setTimeout(() => { textEl.innerText = text; timeEl.innerText = time; textEl.style.opacity = 1; timeEl.style.opacity = 1; }, 350);
+  }
+  let rotatingInterval = setInterval(() => { idx = (idx + 1) % activities.length; updateFeed(activities[idx].text, activities[idx].time); }, 3500);
+  const socket = io();
+  socket.on('new_approval', function(data) {
+    clearInterval(rotatingInterval);
+    updateFeed(data.text, data.time);
+    activities.unshift({ text: data.text, time: data.time });
+    idx = 0;
+    setTimeout(() => { rotatingInterval = setInterval(() => { idx = (idx+1)%activities.length; updateFeed(activities[idx].text, activities[idx].time); }, 3500); }, 10000);
+  });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Verify OTP{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center px-4 py-20"
+     style="background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.1) 0%, transparent 60%), #020617;">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <span class="section-tag text-xs font-semibold px-4 py-1.5 rounded-full inline-block uppercase tracking-widest mb-4">
+        Verification
+      </span>
+      <h1 class="text-3xl font-black tracking-tight">Enter <span class="gradient-text">OTP</span></h1>
+      <p class="text-gray-500 text-sm mt-2">A 6-digit code has been sent to {{ session['reset_email'] }}</p>
+    </div>
+
+    <div class="card-glass p-8">
+      <form action="/verify_otp" method="POST">
+        <div class="space-y-5">
+          <div>
+            <label class="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide">6-Digit Code</label>
+            <div class="relative">
+              <span class="absolute left-3 top-3 text-gray-500">🔢</span>
+              <input type="text" name="otp" maxlength="6" required placeholder="Enter OTP"
+                     class="field-input pl-9 w-full text-center tracking-[0.5em] font-mono text-xl">
+            </div>
+          </div>
+          <button type="submit"
+                  class="btn-glow w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition duration-300 text-sm tracking-wide">
+            Verify Code →
+          </button>
+        </div>
+      </form>
+      <p class="text-center text-gray-500 text-sm mt-6">
+        Didn't get the code? <a href="/forgot_password" class="text-emerald-400 hover:text-emerald-300 font-semibold">Try again</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}My Prediction History{% endblock %}
+
+{% block content %}
+<div class="pt-24 pb-20 px-4 md:px-6 min-h-screen"
+     style="background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.07) 0%, transparent 60%), #020617;">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-10 gap-4">
+      <div>
+        <span class="section-tag text-xs font-semibold px-4 py-1.5 rounded-full inline-block uppercase tracking-widest mb-3">
+          My Account
+        </span>
+        <h1 class="text-4xl font-black tracking-tight">Prediction <span class="gradient-text">History</span></h1>
+        <p class="text-gray-500 text-sm mt-1">All loan predictions made under your account</p>
+      </div>
+      <a href="/predict" class="btn-glow bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl transition text-sm self-start md:self-auto">
+        + New Prediction
+      </a>
+    </div>
+
+    {% if apps %}
+    <div class="card-glass rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date</th>
+              <th>Loan Amount</th>
+              <th>Income</th>
+              <th>Area</th>
+              <th>Decision</th>
+              <th>Confidence</th>
+              <th>Credit Score</th>
+              <th>PDF</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for app in apps %}
+            <tr>
+              <td class="text-gray-500">#{{ app.id }}</td>
+              <td class="text-gray-400 text-xs">{{ app.timestamp.strftime('%d %b %Y, %H:%M') if app.timestamp else '—' }}</td>
+              <td class="font-semibold">₹{{ app.loan_amount | int }}k</td>
+              <td>₹{{ (app.applicant_income + app.coapplicant_income) | int }}</td>
+              <td class="text-gray-400">{{ app.area }}</td>
+              <td>
+                {% if app.prediction == 'approved' %}
+                <span class="px-2.5 py-1 rounded-lg bg-green-500/20 text-green-400 font-semibold text-xs">✅ Approved</span>
+                {% else %}
+                <span class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-semibold text-xs">❌ Rejected</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if app.confidence %}
+                <span class="text-sm font-bold {% if app.confidence >= 75 %}text-green-400{% elif app.confidence >= 55 %}text-yellow-400{% else %}text-red-400{% endif %}">
+                  {{ app.confidence }}%
+                </span>
+                {% else %}—{% endif %}
+              </td>
+              <td>
+                {% if app.credit_score %}
+                <span class="font-bold {% if app.credit_score >= 700 %}text-green-400{% elif app.credit_score >= 500 %}text-yellow-400{% else %}text-red-400{% endif %}">
+                  {{ app.credit_score }}
+                </span>
+                {% else %}—{% endif %}
+              </td>
+              <td>
+                <a href="/download_report/{{ app.id }}" target="_blank"
+                   class="text-emerald-400 hover:text-emerald-300 text-xs font-semibold transition">📄 PDF</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <div class="card-glass rounded-2xl p-16 text-center">
+      <div class="text-6xl mb-4">📋</div>
+      <h2 class="text-2xl font-bold mb-2">No Predictions Yet</h2>
+      <p class="text-gray-500 text-sm mb-6">Submit your first loan application to see results here.</p>
+      <a href="/predict" class="btn-glow bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-8 rounded-xl transition text-sm inline-block">
+        Make a Prediction →
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
