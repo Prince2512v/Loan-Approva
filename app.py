@@ -41,7 +41,12 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ═══════════════════════════════ DATABASE ════════════════════════════════════
-DB_PATH = os.path.join(BASE_DIR, 'database', 'loans.db')
+if os.environ.get('VERCEL'):
+    # Vercel has a read-only filesystem except for /tmp
+    DB_PATH = '/tmp/loans.db'
+else:
+    DB_PATH = os.path.join(BASE_DIR, 'database', 'loans.db')
+
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
