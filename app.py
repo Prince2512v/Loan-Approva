@@ -41,11 +41,11 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ═══════════════════════════════ DATABASE ════════════════════════════════════
-# Priority: 1. Environment Variable (Production) 2. Local File (Development)
-DATABASE_URL = os.environ.get('DATABASE_URL')
+# Priority: 1. Vercel Postgres (Auto) 2. Custom DB URL 3. Local SQLite
+DATABASE_URL = os.environ.get('POSTGRES_URL') or os.environ.get('DATABASE_URL')
 
 if DATABASE_URL:
-    # Fix for SQLAlchemy 1.4+ (Render/Heroku often provide 'postgres://' but need 'postgresql://')
+    # Fix for SQLAlchemy 1.4+ 
     if DATABASE_URL.startswith("postgres://"):
         DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
