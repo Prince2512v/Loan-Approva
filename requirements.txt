@@ -11,3 +11,5 @@ pandas
 scikit-learn
 plotly
 werkzeug
+python-dotenv
+gunicorn
