@@ -1,92 +1,118 @@
-# Loan Approval Prediction
+# 🚀 LoanDecide: Loan Approval Prediction System
 
-![Loan-Approval-Prediction](https://socialify.git.ci/neerajcodes888/Loan-Approval-Prediction/image?description=1&descriptionEditable=Welcome%20to%20Loan%20Approval%20Prediction%2C%20a%20web%20application%20designed%20to%20%20%20%20%20predict%20loan%20approvals%20using%20machine%20learning%20algorithms.%20&language=1&name=1&owner=1&pattern=Solid&theme=Dark)
+LoanDecide is a high-performance, full-stack machine learning web application designed to predict loan approval probabilities with high accuracy. It combines a sleek, modern "Glassmorphism" UI with robust back-end logic and Explainable AI (XAI) to provide users with transparent and actionable financial insights.
 
-## Table of Contents
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-2.0+-000000?style=for-the-badge&logo=flask&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Latest-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Latest-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 
-- [Introduction](#introduction)
-- [Demo](#demo)
-  - [Demo Link](#demo-link)
-  - [Video Demo](#video-demo)
-- [Usage](#usage)
-- [Installation](#installation)
-- [Prerequisites](#prerequisites)
-- [Features](#features)
-- [License](#license)
-- [Contribution](#contribution)
+---
 
-## Introduction
+## ✨ Key Features
 
-Loan Approval Prediction is a user-friendly web application that utilizes machine learning models to predict whether a loan application will be approved or not. With a clean and intuitive interface, users can easily input their information and receive a quick decision on their loan application.
+### 🧠 Intelligent Prediction
+- **ML Engine**: Uses a Random Forest Classifier to predict loan status based on 11+ financial parameters.
+- **Explainable AI (XAI)**: Doesn't just give a "Yes/No". It provides a detailed breakdown of *why* a loan was approved or rejected (e.g., credit history impact, income-to-loan ratio).
+- **Credit Scoring**: Generates a proprietary credit score (0–900) based on applicant data.
 
-## Demo
+### 📊 Advanced Analytics
+- **Live Dashboard**: Interactive Plotly charts showing approval rates, income vs. loan amount correlations, and property area trends.
+- **Model Comparison**: Real-time accuracy benchmarking between Logistic Regression, Random Forest, and Decision Tree models.
+- **Dynamic Retraining**: Administrators can upload new datasets (CSV) to retrain and update the production model instantly.
 
-### Demo Link
+### 🔐 Secure & User-Centric
+- **Authentication**: Secure JWT/Session-based login and registration.
+- **OTP Password Reset**: Integrated email service for secure password recovery via 6-digit OTP.
+- **PDF Reports**: Generate and download professional PDF reports for every loan application.
+- **Real-time Updates**: Socket.IO integration for live notifications on global loan trends.
 
-You can access the live demo of the application [here](https://loan-approval-prediction-b5l5.onrender.com/).
+---
 
-### Video Demo
+## 🛠️ Tech Stack
 
+- **Frontend**: HTML5, Vanilla CSS (Custom Glassmorphism Design System), JavaScript (ES6+).
+- **Backend**: Flask (Python), SQLAlchemy ORM.
+- **Machine Learning**: Scikit-learn, Pandas, NumPy, Joblib.
+- **Visualizations**: Plotly.js / Plotly Python.
+- **Security**: Werkzeug Security (Password Hashing), ItsDangerous (Tokenization).
+- **Utilities**: Flask-Mail (OTP), FPDF (Report Generation), Flask-SocketIO (Real-time).
 
-![loan_Approval_Prediction Demo](https://github.com/neerajcodes888/Loan-Approval-Prediction/assets/98253646/276b7691-55f1-4aa4-95cb-daf5e76c3ffa)
+---
 
+## 🚀 Getting Started
 
-## Usage
+### Prerequisites
+- Python 3.8 or higher
+- pip (Python Package Installer)
 
-To use the Loan Approval Prediction application, follow the installation steps mentioned below and ensure all prerequisites are met. Then, run the Flask application and navigate to the provided URL in your web browser. Input the necessary information and submit to get the loan approval prediction.
+### Installation
 
-## Installation
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Prince2512v/Loan-Approva.git
+   cd Loan-Approva
+   ```
 
-1. Clone the repository:
+2. **Set Up Virtual Environment**
+   ```bash
+   python -m venv venv
+   source venv/Scripts/activate  # On Windows
+   # source venv/bin/activate    # On Linux/Mac
+   ```
 
-```bash
-git clone https://github.com/neerajcodes888/loan-approval-prediction.git
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Environment Variables**
+   Create a `.env` file in the root directory and add your mail settings (for OTP functionality):
+   ```env
+   MAIL_SERVER=smtp.gmail.com
+   MAIL_PORT=587
+   MAIL_USE_TLS=True
+   MAIL_USERNAME=your-email@gmail.com
+   MAIL_PASSWORD=your-app-password
+   ```
+
+5. **Initialize Database & Run**
+   ```bash
+   python app.py
+   ```
+   The app will be available at `http://127.0.0.1:5000`.
+
+---
+
+## 📁 Project Structure
+
+```text
+├── app.py                  # Main Flask application logic
+├── models/                 # Pre-trained ML models (Joblib)
+├── static/                 # CSS, JavaScript, and Images
+├── templates/              # HTML templates (Jinja2)
+├── database/               # SQLite database file
+├── train.csv / test.csv    # Datasets for training & testing
+├── requirements.txt        # Project dependencies
+└── .gitignore              # Files to exclude from Git
 ```
 
-2. Navigate to the project directory:
+---
 
-```bash
-cd Loan-Approval-Prediction
+## 🤝 Contributing
 
-```
-### Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+Contributions are welcome! Feel free to:
+1. Fork the project.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
-### Run the Flask application:
-```bash
-python app.py
-```
+---
 
-## Prerequisites
+## 📄 License
 
-Ensure you have the following installed before running the application:
+Distributed under the MIT License. See `LICENSE` for more information.
 
-- Python 3.11.4
-- Flask
-- scikit-learn
-- HTML5-compatible web browser
-
-## Features
-
-- Predict loan approval based on user input.
-- Beautiful UI design using HTML5 and Tailwind CSS.
-- Efficient machine learning algorithms for accurate predictions.
-
-## License
-
-MIT License
-
-Copyright (c) [2024] [Neeraj Kumar]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-## Contribution
-
-Contributions are welcome! Feel free to open issues and pull requests.
-
+---
+Developed with ❤️ by [Prince Vasoya](https://github.com/Prince2512v)
