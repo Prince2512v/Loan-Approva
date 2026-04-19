@@ -13,3 +13,4 @@ plotly
 werkzeug
 python-dotenv
 gunicorn
+psycopg2-binary

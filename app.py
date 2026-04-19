@@ -41,13 +41,21 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ═══════════════════════════════ DATABASE ════════════════════════════════════
-if os.environ.get('VERCEL'):
-    # Vercel has a read-only filesystem except for /tmp
-    DB_PATH = '/tmp/loans.db'
-else:
-    DB_PATH = os.path.join(BASE_DIR, 'database', 'loans.db')
+# Priority: 1. Environment Variable (Production) 2. Local File (Development)
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
+if DATABASE_URL:
+    # Fix for SQLAlchemy 1.4+ (Render/Heroku often provide 'postgres://' but need 'postgresql://')
+    if DATABASE_URL.startswith("postgres://"):
+        DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+else:
+    if os.environ.get('VERCEL'):
+        DB_PATH = '/tmp/loans.db'
+    else:
+        DB_PATH = os.path.join(BASE_DIR, 'database', 'loans.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
