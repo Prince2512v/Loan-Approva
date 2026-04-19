@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: loan-decide-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: SECRET_KEY
+        value: loan-secret-2026
+      # Add your mail env vars here or in the Render dashboard
+      # - key: MAIL_SERVER
+      #   value: smtp.gmail.com
