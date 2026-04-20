@@ -41,14 +41,25 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ═══════════════════════════════ DATABASE ════════════════════════════════════
-# Priority: 1. Vercel Postgres (Auto) 2. Custom DB URL 3. Local SQLite
-DATABASE_URL = os.environ.get('POSTGRES_URL') or os.environ.get('DATABASE_URL')
+# Priority: 1. Vercel/Supabase Postgres (Auto) 2. Custom DB URL 3. Local SQLite
+DATABASE_URL = (
+    os.environ.get('POSTGRES_URL') or 
+    os.environ.get('DATABASE_URL') or 
+    os.environ.get('STORAGE_URL') or  # Supporting the custom prefix from your screenshot
+    os.environ.get('SUPABASE_DATABASE_URL')
+)
 
 if DATABASE_URL:
-    # Fix for SQLAlchemy 1.4+ 
+    # Fix for SQLAlchemy 1.4+ (Supabase/Vercel often use 'postgres://')
     if DATABASE_URL.startswith("postgres://"):
         DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    
+    # Handle connection pooling if using Supabase/Vercel Postgres
+    if "supabase" in DATABASE_URL or "vercel-storage" in DATABASE_URL:
+        # Some providers need a specific connection mode
+        app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 else:
     if os.environ.get('VERCEL'):
         DB_PATH = '/tmp/loans.db'
